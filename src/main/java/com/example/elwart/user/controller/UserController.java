@@ -26,5 +26,10 @@ public class UserController {
     public void registerUser(@RequestBody UserDto userDto){
         userService.registerUser(userDto);
     }
+    @PutMapping("/change_password/{id}")
+    public void changePassword(@PathVariable Long id, @RequestParam String password){
+        userService.changePassword(id,password);
+    }
+    
 
 }

@@ -2,6 +2,7 @@ package com.example.elwart.user.service;
 
 import com.example.elwart.user.dto.UserDto;
 import com.example.elwart.user.exception.RoleNotFoundException;
+import com.example.elwart.user.exception.UserNotFoundException;
 import com.example.elwart.user.model.Role;
 import com.example.elwart.user.model.User;
 import com.example.elwart.user.repository.RoleRepository;
@@ -39,6 +40,14 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
     }
+
+    @Override
+    public void changePassword(Long userId, String password) {
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
+        user.setPassword(password);
+        userRepository.save(user);
+    }
+
 
     private List<Role> getRoles(List<String> roles) {
         List<Role> roleList = new ArrayList<>();

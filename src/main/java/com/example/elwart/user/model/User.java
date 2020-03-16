@@ -16,10 +16,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-
     @NotNull
     private String companyName;
-
     @NotNull
     private String companyAddress;
     @NotNull

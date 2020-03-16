@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface UserService {
     void registerUser(UserDto userDto);
+
     List<User> getAllUsers();
+
+    void changePassword(Long userId, String password);
 }
