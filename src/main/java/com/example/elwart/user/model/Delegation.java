@@ -1,8 +1,7 @@
-package com.example.elwart.delegation.model;
+package com.example.elwart.user.model;
 
 
-import com.example.elwart.delegation.transport.Transport;
-import com.example.elwart.user.model.User;
+import com.example.elwart.user.transport.Transport;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

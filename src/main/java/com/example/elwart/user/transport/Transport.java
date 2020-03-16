@@ -1,4 +1,4 @@
-package com.example.elwart.delegation.transport;
+package com.example.elwart.user.transport;
 
 import java.util.Set;
 

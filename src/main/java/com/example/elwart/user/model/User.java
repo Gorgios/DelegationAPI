@@ -1,11 +1,9 @@
 package com.example.elwart.user.model;
 
-import com.example.elwart.delegation.model.Delegation;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
