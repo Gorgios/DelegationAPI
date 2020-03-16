@@ -3,6 +3,7 @@ package com.example.elwart.user.service;
 import com.example.elwart.user.dto.UserDto;
 import com.example.elwart.user.exception.RoleNotFoundException;
 import com.example.elwart.user.exception.UserNotFoundException;
+import com.example.elwart.user.model.Delegation;
 import com.example.elwart.user.model.Role;
 import com.example.elwart.user.model.User;
 import com.example.elwart.user.repository.RoleRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
+
+    // tutaj void ? A nie mozna zwrocic Usera ?
 
     @Override
     public void registerUser(UserDto userDto) {
@@ -43,10 +47,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(Long userId, String password) {
-        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         user.setPassword(password);
         userRepository.save(user);
     }
+
+    // Zrobilem to boolean bo pan kazal, ale mysle, ze Exceptions to lepszy pomysl
 
     @Override
     public boolean deleteUserById(Long userId) {
@@ -56,11 +62,29 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    // Tutaj przy boolean to wgl nie wiemy o co chodzi ? Ktory to blad :/
+
+    @Override
+    public boolean removeDelegation(Long userId, Long delegationId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isEmpty())
+            return false;
+        User user = userOptional.get();
+        List<Delegation> delegations = user.getDelegations();
+        for (Delegation d: delegations)
+            if (d.getId().equals(delegationId)) {
+                user.getDelegations().remove(d);
+                userRepository.save(user);
+                return true;
+            }
+        return false;
+    }
+
 
     private List<Role> getRoles(List<String> roles) {
         List<Role> roleList = new ArrayList<>();
         if (roles == null)
-            roleList.add(roleRepository.findByRole("ROLE_USER").orElseThrow(()-> new RoleNotFoundException("ROLE_USER")));
+            roleList.add(roleRepository.findByRole("ROLE_USER").orElseThrow(() -> new RoleNotFoundException("ROLE_USER")));
         else
             roles.forEach(r -> roleList.add(roleRepository.findByRole(r).orElseThrow(() -> new RoleNotFoundException(r))));
         return roleList;

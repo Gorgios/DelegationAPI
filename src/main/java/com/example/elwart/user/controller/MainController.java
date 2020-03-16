@@ -51,5 +51,9 @@ public class MainController {
     public void addDelegation(@RequestBody DelegationDto delegationDto, @RequestParam Long userId) throws NotKmException, BadAutoCapacityException, NotTicketPriceException {
        delegationService.addDelegation(delegationDto,userId);
     }
+    @DeleteMapping("/delegation/removeDelegation")
+    public boolean removeDelegation(@RequestParam Long delegationId, @RequestParam Long userId){
+        return  userService.removeDelegation(delegationId,userId);
+    }
 
 }

@@ -13,4 +13,6 @@ public interface UserService {
     void changePassword(Long userId, String password);
 
     boolean deleteUserById(Long userId);
+
+    boolean removeDelegation(Long userId, Long delegationId);
 }

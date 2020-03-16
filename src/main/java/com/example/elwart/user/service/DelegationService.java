@@ -8,4 +8,5 @@ import com.example.elwart.user.exception.NotTicketPriceException;
 public interface DelegationService {
 
     void addDelegation(DelegationDto delegationDto, Long userId) throws BadAutoCapacityException, NotKmException, NotTicketPriceException;
+
 }
