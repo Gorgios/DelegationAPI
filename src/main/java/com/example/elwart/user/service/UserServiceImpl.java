@@ -64,26 +64,11 @@ public class UserServiceImpl implements UserService {
 
     // Tutaj przy boolean to wgl nie wiemy o co chodzi ? Ktory to blad :/
 
-    @Override
-    public boolean removeDelegation(Long userId, Long delegationId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return false;
-        User user = userOptional.get();
-        List<Delegation> delegations = user.getDelegations();
-        for (Delegation d: delegations)
-            if (d.getId().equals(delegationId)) {
-                user.getDelegations().remove(d);
-                userRepository.save(user);
-                return true;
-            }
-        return false;
-    }
 
     @Override
     public List<User> getAllByRole(String roleName) {
         Role role = roleRepository.findByRole(roleName).orElseThrow(()->new RoleNotFoundException(roleName));
-        return userRepository.findAllByRolesContains(role);
+        return userRepository.findAllByRoles(role);
     }
 
 

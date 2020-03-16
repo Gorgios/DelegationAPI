@@ -54,7 +54,7 @@ public class MainController {
     }
     @DeleteMapping("/delegation/removeDelegation")
     public boolean removeDelegation(@RequestParam Long delegationId, @RequestParam Long userId){
-        return  userService.removeDelegation(delegationId,userId);
+        return  delegationService.removeDelegation(delegationId,userId);
     }
     @PutMapping("/delegation/{id}")
     public void changeDelegation(@RequestBody DelegationDto delegationDto, @PathVariable Long id) throws NotKmException, BadAutoCapacityException, NotTicketPriceException {
@@ -66,6 +66,14 @@ public class MainController {
     }
     @GetMapping("/user/getByRole")
     public List<User> getAllByRoleName(@RequestParam String roleName){
-        return  null;
+        return  userService.getAllByRole(roleName);
+    }
+    @GetMapping("/delegation/sortByDate")
+    public List <Delegation> getAllByDate(){
+        return delegationService.getAllByDateStartDesc();
+    }
+    @GetMapping("/delegation/sortByUserDate")
+    public List<Delegation> getAllByUserAndDate(@RequestParam  Long userId){
+        return delegationService.getAllByUserAndDateStartDesc(userId);
     }
 }

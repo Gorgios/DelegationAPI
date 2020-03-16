@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class DelegationDto {
     private String description;
     private LocalDateTime dateTimeStart;
-    private Date dateTimeStop;
+    private LocalDateTime dateTimeStop;
     private Double travelDietAmount = 30D;
     private Integer breakfastNumber = 0;
     private Integer dinnerNumber = 0;
@@ -42,11 +42,11 @@ public class DelegationDto {
         this.dateTimeStart = dateTimeStart;
     }
 
-    public Date getDateTimeStop() {
+    public LocalDateTime getDateTimeStop() {
         return dateTimeStop;
     }
 
-    public void setDateTimeStop(Date dateTimeStop) {
+    public void setDateTimeStop(LocalDateTime dateTimeStop) {
         this.dateTimeStop = dateTimeStop;
     }
 

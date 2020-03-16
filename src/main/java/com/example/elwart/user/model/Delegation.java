@@ -2,10 +2,9 @@ package com.example.elwart.user.model;
 
 
 import com.example.elwart.user.transport.Transport;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotNull;
@@ -20,11 +19,11 @@ public class Delegation {
     @Column
     private String description;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTimeStart;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date dateTimeStop;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime dateTimeStop;
     private Double travelDietAmount = 30D;
     private Integer breakfastNumber = 0;
     private Integer dinnerNumber = 0;
@@ -74,11 +73,11 @@ public class Delegation {
         this.travelDietAmount = travelDietAmount;
     }
 
-    public Date getDateTimeStop() {
+    public LocalDateTime getDateTimeStop() {
         return dateTimeStop;
     }
 
-    public void setDateTimeStop(Date dateTimeStop) {
+    public void setDateTimeStop(LocalDateTime dateTimeStop) {
         this.dateTimeStop = dateTimeStop;
     }
 
@@ -184,7 +183,7 @@ public class Delegation {
         private Long id;
         private String description;
         private LocalDateTime dateTimeStart;
-        private Date dateTimeStop;
+        private LocalDateTime dateTimeStop;
         private Double travelDietAmount = 30D;
         private Integer breakfastNumber = 0;
         private Integer dinnerNumber = 0;
@@ -221,7 +220,7 @@ public class Delegation {
             return this;
         }
 
-        public DelegationBuilder withDateTimeStop(Date dateTimeStop) {
+        public DelegationBuilder withDateTimeStop(LocalDateTime dateTimeStop) {
             this.dateTimeStop = dateTimeStop;
             return this;
         }

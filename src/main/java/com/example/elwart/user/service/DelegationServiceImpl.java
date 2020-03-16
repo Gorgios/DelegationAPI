@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DelegationServiceImpl implements DelegationService {
@@ -29,33 +30,29 @@ public class DelegationServiceImpl implements DelegationService {
     @Override
     public void addDelegation(DelegationDto delegationDto, Long userId) throws BadAutoCapacityException, NotKmException, NotTicketPriceException{
         User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
-        Delegation delegation = Delegation.DelegationBuilder.aDelegation().withAccommodationPrice(delegationDto.getAccommodationPrice()).
-                withAutoCapacity(getAutoCapacity(delegationDto.getAutoCapacity())).withBreakfastNumber(delegationDto.getBreakfastNumber()).
-                withDateTimeStart(delegationDto.getDateTimeStart()).withDateTimeStop(delegationDto.getDateTimeStop()).
-                withDescription(delegationDto.getDescription()).withDinnerNumber(delegationDto.getDinnerNumber()).
-                withKm(getKm(delegationDto.getKm(),delegationDto.getTransportType())).withOtherOutlayDesc(delegationDto.getOtherOutlayDesc()).
-                withOtherOutlayPrice(delegationDto.getOtherOutlayPrice()).withOtherTicketsPrice(delegationDto.getOtherTicketsPrice()).
-                withSupperNumber(delegationDto.getSupperNumber()).withTicketPrice(getTicketPrice(delegationDto.getTicketPrice(),delegationDto.getTransportType())).
-                withTransportType(delegationDto.getTransportType()).withTravelDietAmount(delegationDto.getTravelDietAmount()).
-                withUser(user).build();
+        Delegation delegation =buildDelgation(delegationDto, user);
         delegationRepository.save(delegation);
     }
 
     @Override
     public void changeDelegation(DelegationDto delegationDto, Long delgationId) throws BadAutoCapacityException, NotKmException, NotTicketPriceException {
-        Delegation delegationFromDto = Delegation.DelegationBuilder.aDelegation().withAccommodationPrice(delegationDto.getAccommodationPrice()).
-                withAutoCapacity(getAutoCapacity(delegationDto.getAutoCapacity())).withBreakfastNumber(delegationDto.getBreakfastNumber()).
+        Delegation delegation = delegationRepository.findById(delgationId).orElseThrow(()->new DelegationNotFoundException(delgationId));
+        User user = delegation.getUser();
+        Delegation newDelegation = buildDelgation(delegationDto, user);
+        newDelegation.setId(delegation.getId());
+        delegationRepository.save(newDelegation);
+
+    }
+
+    private Delegation buildDelgation(DelegationDto delegationDto, User user) throws BadAutoCapacityException, NotKmException, NotTicketPriceException {
+        return Delegation.DelegationBuilder.aDelegation().withAccommodationPrice(delegationDto.getAccommodationPrice()).
+                withAutoCapacity(getAutoCapacity(delegationDto.getAutoCapacity(),delegationDto.getTransportType())).withBreakfastNumber(delegationDto.getBreakfastNumber()).
                 withDateTimeStart(delegationDto.getDateTimeStart()).withDateTimeStop(delegationDto.getDateTimeStop()).
                 withDescription(delegationDto.getDescription()).withDinnerNumber(delegationDto.getDinnerNumber()).
                 withKm(getKm(delegationDto.getKm(),delegationDto.getTransportType())).withOtherOutlayDesc(delegationDto.getOtherOutlayDesc()).
                 withOtherOutlayPrice(delegationDto.getOtherOutlayPrice()).withOtherTicketsPrice(delegationDto.getOtherTicketsPrice()).
                 withSupperNumber(delegationDto.getSupperNumber()).withTicketPrice(getTicketPrice(delegationDto.getTicketPrice(),delegationDto.getTransportType())).
-                withTransportType(delegationDto.getTransportType()).withTravelDietAmount(delegationDto.getTravelDietAmount()).build();
-        Delegation delegation = delegationRepository.findById(delgationId).orElseThrow(()->new DelegationNotFoundException(delgationId));
-        delegationFromDto.setId(delegation.getId());
-        delegationFromDto.setUser(delegation.getUser());
-        delegationRepository.save(delegationFromDto);
-
+                withTransportType(delegationDto.getTransportType()).withTravelDietAmount(delegationDto.getTravelDietAmount()).withUser(user).build();
     }
 
     @Override
@@ -74,12 +71,28 @@ public class DelegationServiceImpl implements DelegationService {
         return delegationRepository.findDelegationsByUserOrderByDateTimeStartDesc(user);
     }
 
+    @Override
+    public boolean removeDelegation(Long userId, Long delegationId) {
+        Delegation delegation = delegationRepository.findById(delegationId).orElse(null);
+        if (delegation==null)
+            return false;
+        if (delegation.getUser().getId().equals(userId)){
+            delegationRepository.delete(delegation);
+            return true;
+        }
+        return false;
+    }
+
     private Double getTicketPrice(Double ticketPrice, Transport transport) throws NotTicketPriceException {
         if (ticketPrice == null && transport.isPublicTransport())
             throw new NotTicketPriceException();
         return ticketPrice;
     }
-    private Integer getAutoCapacity(Integer autoCapacity) throws BadAutoCapacityException {
+    private Integer getAutoCapacity(Integer autoCapacity, Transport transport) throws BadAutoCapacityException {
+        if (autoCapacity == null && transport.isPublicTransport())
+            return  autoCapacity;
+        if (autoCapacity == null)
+            throw new BadAutoCapacityException(autoCapacity);
         if (autoCapacity >= 1900 || autoCapacity < 900)
             throw new BadAutoCapacityException(autoCapacity);
         return autoCapacity;
