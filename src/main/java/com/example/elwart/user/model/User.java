@@ -27,6 +27,8 @@ public class User {
     @NotNull
     private String name;
     @NotNull
+    private String fullName;
+    @NotNull
     private String email;
     @NotNull
     private String password;
@@ -36,7 +38,7 @@ public class User {
     @ManyToMany (cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", columnDefinition = "bigint default 1")
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
     @OneToMany(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -128,5 +130,105 @@ public class User {
 
     public void setDelegations(List<Delegation> delegations) {
         this.delegations = delegations;
+    }
+
+
+    public static final class UserBuilder {
+        private Long id;
+        private String companyName;
+        private String companyAddress;
+        private String companyNip;
+        private String name;
+        private String fullName;
+        private String email;
+        private String password;
+        private boolean status = true;
+        private LocalDateTime registrationDate = LocalDateTime.now();
+        private List<Role> roles;
+        private List<Delegation> delegations;
+
+        private UserBuilder() {
+        }
+
+        public static UserBuilder anUser() {
+            return new UserBuilder();
+        }
+
+        public UserBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder withCompanyName(String companyName) {
+            this.companyName = companyName;
+            return this;
+        }
+
+        public UserBuilder withCompanyAddress(String companyAddress) {
+            this.companyAddress = companyAddress;
+            return this;
+        }
+
+        public UserBuilder withCompanyNip(String companyNip) {
+            this.companyNip = companyNip;
+            return this;
+        }
+
+        public UserBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder withFullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public UserBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withStatus(boolean status) {
+            this.status = status;
+            return this;
+        }
+
+        public UserBuilder withRegistrationDate(LocalDateTime registrationDate) {
+            this.registrationDate = registrationDate;
+            return this;
+        }
+
+        public UserBuilder withRoles(List<Role> roles) {
+            this.roles = roles;
+            return this;
+        }
+
+        public UserBuilder withDelegations(List<Delegation> delegations) {
+            this.delegations = delegations;
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+            user.setId(id);
+            user.setCompanyName(companyName);
+            user.setCompanyAddress(companyAddress);
+            user.setCompanyNip(companyNip);
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setStatus(status);
+            user.setRegistrationDate(registrationDate);
+            user.setRoles(roles);
+            user.setDelegations(delegations);
+            user.fullName = this.fullName;
+            return user;
+        }
     }
 }

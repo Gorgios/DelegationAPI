@@ -1,5 +1,7 @@
 package com.example.elwart.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -14,6 +16,7 @@ public class Role {
     @NotNull
     private String role;
 
+    @JsonIgnore
     @ManyToMany ( mappedBy = "roles",
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<User> users;

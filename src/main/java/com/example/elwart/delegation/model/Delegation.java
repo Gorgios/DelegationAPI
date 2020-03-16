@@ -29,6 +29,7 @@ public class Delegation {
     private Integer breakfastNumber = 0;
     private Integer dinnerNumber = 0;
     private Integer supperNumber =0;
+    @Enumerated(EnumType.STRING)
     private Transport transportType;
     private Double ticketPrice;
     private Integer autoCapacity;
