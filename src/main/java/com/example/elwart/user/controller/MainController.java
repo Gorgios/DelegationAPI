@@ -1,7 +1,12 @@
 package com.example.elwart.user.controller;
 
+import com.example.elwart.user.dto.DelegationDto;
 import com.example.elwart.user.dto.UserDto;
+import com.example.elwart.user.exception.BadAutoCapacityException;
+import com.example.elwart.user.exception.NotKmException;
+import com.example.elwart.user.exception.NotTicketPriceException;
 import com.example.elwart.user.model.User;
+import com.example.elwart.user.service.DelegationService;
 import com.example.elwart.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +18,14 @@ import java.util.List;
 public class MainController {
 
     private UserService userService;
+    private DelegationService delegationService;
 
     @Autowired
-    public MainController(UserService userService) {
+    public MainController(UserService userService, DelegationService delegationService) {
         this.userService = userService;
+        this.delegationService = delegationService;
     }
+
 
     @GetMapping("/user")
     public List<User> getAllUsers() {
@@ -39,5 +47,9 @@ public class MainController {
        return userService.deleteUserById(id);
     }
 
+    @PostMapping("/delegation")
+    public void addDelegation(@RequestBody DelegationDto delegationDto, @RequestParam Long userId) throws NotKmException, BadAutoCapacityException, NotTicketPriceException {
+       delegationService.addDelegation(delegationDto,userId);
+    }
 
 }

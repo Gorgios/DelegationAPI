@@ -25,6 +25,7 @@ public class Delegation {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date dateTimeStop;
+    private Double travelDietAmount = 30D;
     private Integer breakfastNumber = 0;
     private Integer dinnerNumber = 0;
     private Integer supperNumber =0;
@@ -33,7 +34,7 @@ public class Delegation {
     private Double ticketPrice;
     private Integer autoCapacity;
     private Double km;
-    private Double accomodationPrice;
+    private Double accommodationPrice;
     private Double otherTicketsPrice;
     private String otherOutlayDesc;
     private Double otherOutlayPrice;
@@ -63,6 +64,14 @@ public class Delegation {
 
     public void setDateTimeStart(LocalDateTime dateTimeStart) {
         this.dateTimeStart = dateTimeStart;
+    }
+
+    public Double getTravelDietAmount() {
+        return travelDietAmount;
+    }
+
+    public void setTravelDietAmount(Double travelDietAmount) {
+        this.travelDietAmount = travelDietAmount;
     }
 
     public Date getDateTimeStop() {
@@ -129,13 +138,14 @@ public class Delegation {
         this.km = km;
     }
 
-    public Double getAccomodationPrice() {
-        return accomodationPrice;
+    public Double getAccommodationPrice() {
+        return accommodationPrice;
     }
 
-    public void setAccomodationPrice(Double accomodationPrice) {
-        this.accomodationPrice = accomodationPrice;
+    public void setAccommodationPrice(Double accommodationPrice) {
+        this.accommodationPrice = accommodationPrice;
     }
+
 
     public Double getOtherTicketsPrice() {
         return otherTicketsPrice;
@@ -167,5 +177,140 @@ public class Delegation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    public static final class DelegationBuilder {
+        private Long id;
+        private String description;
+        private LocalDateTime dateTimeStart;
+        private Date dateTimeStop;
+        private Double travelDietAmount = 30D;
+        private Integer breakfastNumber = 0;
+        private Integer dinnerNumber = 0;
+        private Integer supperNumber =0;
+        private Transport transportType;
+        private Double ticketPrice;
+        private Integer autoCapacity;
+        private Double km;
+        private Double accommodationPrice;
+        private Double otherTicketsPrice;
+        private String otherOutlayDesc;
+        private Double otherOutlayPrice;
+        private User user;
+
+        private DelegationBuilder() {
+        }
+
+        public static DelegationBuilder aDelegation() {
+            return new DelegationBuilder();
+        }
+
+        public DelegationBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public DelegationBuilder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public DelegationBuilder withDateTimeStart(LocalDateTime dateTimeStart) {
+            this.dateTimeStart = dateTimeStart;
+            return this;
+        }
+
+        public DelegationBuilder withDateTimeStop(Date dateTimeStop) {
+            this.dateTimeStop = dateTimeStop;
+            return this;
+        }
+
+        public DelegationBuilder withTravelDietAmount(Double travelDietAmount) {
+            this.travelDietAmount = travelDietAmount;
+            return this;
+        }
+
+        public DelegationBuilder withBreakfastNumber(Integer breakfastNumber) {
+            this.breakfastNumber = breakfastNumber;
+            return this;
+        }
+
+        public DelegationBuilder withDinnerNumber(Integer dinnerNumber) {
+            this.dinnerNumber = dinnerNumber;
+            return this;
+        }
+
+        public DelegationBuilder withSupperNumber(Integer supperNumber) {
+            this.supperNumber = supperNumber;
+            return this;
+        }
+
+        public DelegationBuilder withTransportType(Transport transportType) {
+            this.transportType = transportType;
+            return this;
+        }
+
+        public DelegationBuilder withTicketPrice(Double ticketPrice) {
+            this.ticketPrice = ticketPrice;
+            return this;
+        }
+
+        public DelegationBuilder withAutoCapacity(Integer autoCapacity) {
+            this.autoCapacity = autoCapacity;
+            return this;
+        }
+
+        public DelegationBuilder withKm(Double km) {
+            this.km = km;
+            return this;
+        }
+
+        public DelegationBuilder withAccommodationPrice(Double accommodationPrice) {
+            this.accommodationPrice = accommodationPrice;
+            return this;
+        }
+
+        public DelegationBuilder withOtherTicketsPrice(Double otherTicketsPrice) {
+            this.otherTicketsPrice = otherTicketsPrice;
+            return this;
+        }
+
+        public DelegationBuilder withOtherOutlayDesc(String otherOutlayDesc) {
+            this.otherOutlayDesc = otherOutlayDesc;
+            return this;
+        }
+
+        public DelegationBuilder withOtherOutlayPrice(Double otherOutlayPrice) {
+            this.otherOutlayPrice = otherOutlayPrice;
+            return this;
+        }
+
+        public DelegationBuilder withUser(User user) {
+            this.user = user;
+            return this;
+        }
+
+        public Delegation build() {
+            Delegation delegation = new Delegation();
+            delegation.setId(id);
+            delegation.setDescription(description);
+            delegation.setDateTimeStart(dateTimeStart);
+            delegation.setDateTimeStop(dateTimeStop);
+            delegation.setTravelDietAmount(travelDietAmount);
+            delegation.setBreakfastNumber(breakfastNumber);
+            delegation.setDinnerNumber(dinnerNumber);
+            delegation.setSupperNumber(supperNumber);
+            delegation.setTransportType(transportType);
+            delegation.setTicketPrice(ticketPrice);
+            delegation.setAutoCapacity(autoCapacity);
+            delegation.setKm(km);
+            delegation.setAccommodationPrice(accommodationPrice);
+            delegation.setOtherTicketsPrice(otherTicketsPrice);
+            delegation.setOtherOutlayDesc(otherOutlayDesc);
+            delegation.setOtherOutlayPrice(otherOutlayPrice);
+            delegation.setUser(user);
+            return delegation;
+        }
     }
 }

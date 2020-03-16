@@ -12,9 +12,28 @@ public class ExceptionsHandler {
     public String getUserNotFoundException(UserNotFoundException ex) {
         return ex.getMessage();
     }
+
     @ExceptionHandler(RoleNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String getRoleNotFoundException(RoleNotFoundException ex) {
         return ex.getMessage();
     }
+
+    @ExceptionHandler(DelegationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String getDelegationNotFoundException(DelegationNotFoundException ex){ return ex.getMessage();}
+
+    @ExceptionHandler(NotTicketPriceException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String getNotTicketPriceException(NotTicketPriceException ex) { return  ex.getMessage();}
+
+    @ExceptionHandler(NotKmException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String getNotKmException(NotKmException ex) { return  ex.getMessage();}
+
+    @ExceptionHandler(BadAutoCapacityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String getBadAutoCapacityException(BadAutoCapacityException ex) { return  ex.getMessage();}
+
+
 }
