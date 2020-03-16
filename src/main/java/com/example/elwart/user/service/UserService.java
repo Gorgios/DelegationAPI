@@ -3,6 +3,9 @@ package com.example.elwart.user.service;
 import com.example.elwart.user.dto.UserDto;
 import com.example.elwart.user.model.User;
 
+import java.util.List;
+
 public interface UserService {
-    User registerUser(UserDto userDto);
+    void registerUser(UserDto userDto);
+    List<User> getAllUsers();
 }

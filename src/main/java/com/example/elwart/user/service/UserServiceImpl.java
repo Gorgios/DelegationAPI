@@ -26,13 +26,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(UserDto userDto) {
+    public void registerUser(UserDto userDto) {
         User user = User.UserBuilder.anUser().withName(userDto.getName()).withFullName(userDto.getFullName()).
                 withCompanyAddress(userDto.getCompanyAddress()).
                 withCompanyName(userDto.getCompanyName()).withCompanyNip(userDto.getCompanyNip()).
                 withEmail(userDto.getEmail()).
                 withPassword(userDto.getPassword()).withRoles(getRoles(userDto.getRoles())).build();
-        return  userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return (List<User>) userRepository.findAll();
     }
 
     private List<Role> getRoles(List<String> roles) {
