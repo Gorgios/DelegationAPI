@@ -48,6 +48,14 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public boolean deleteUserById(Long userId) {
+        if (userRepository.findById(userId).isEmpty())
+            return false;
+        userRepository.deleteById(userId);
+        return true;
+    }
+
 
     private List<Role> getRoles(List<String> roles) {
         List<Role> roleList = new ArrayList<>();

@@ -18,17 +18,25 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
     @PostMapping
-    public void registerUser(@RequestBody UserDto userDto){
+    public void registerUser(@RequestBody UserDto userDto) {
         userService.registerUser(userDto);
     }
+
     @PutMapping("/change_password/{id}")
-    public void changePassword(@PathVariable Long id, @RequestParam String password){
-        userService.changePassword(id,password);
+    public void changePassword(@PathVariable Long id, @RequestParam String password) {
+        userService.changePassword(id, password);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean deleteUserById(@PathVariable Long id) {
+        userService.deleteUserById(id);
     }
     
 
