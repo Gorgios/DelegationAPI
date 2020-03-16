@@ -15,4 +15,6 @@ public interface UserService {
     boolean deleteUserById(Long userId);
 
     boolean removeDelegation(Long userId, Long delegationId);
+
+    List<User> getAllByRole(String roleName);
 }

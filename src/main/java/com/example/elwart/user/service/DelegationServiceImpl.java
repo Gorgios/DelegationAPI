@@ -11,6 +11,8 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DelegationServiceImpl implements DelegationService {
 
@@ -53,6 +55,11 @@ public class DelegationServiceImpl implements DelegationService {
         delegationFromDto.setUser(delegation.getUser());
         delegationRepository.save(delegationFromDto);
 
+    }
+
+    @Override
+    public List<Delegation> getAllDelegations() {
+        return (List<Delegation>) delegationRepository.findAll();
     }
 
     private Double getTicketPrice(Double ticketPrice, Transport transport) throws NotTicketPriceException {

@@ -5,6 +5,7 @@ import com.example.elwart.user.dto.UserDto;
 import com.example.elwart.user.exception.BadAutoCapacityException;
 import com.example.elwart.user.exception.NotKmException;
 import com.example.elwart.user.exception.NotTicketPriceException;
+import com.example.elwart.user.model.Delegation;
 import com.example.elwart.user.model.User;
 import com.example.elwart.user.service.DelegationService;
 import com.example.elwart.user.service.UserService;
@@ -59,5 +60,12 @@ public class MainController {
     public void changeDelegation(@RequestBody DelegationDto delegationDto, @PathVariable Long id) throws NotKmException, BadAutoCapacityException, NotTicketPriceException {
         delegationService.changeDelegation(delegationDto,id);
     }
-
+    @GetMapping("/delegation")
+    public List<Delegation> getAllDelegations(){
+        return delegationService.getAllDelegations();
+    }
+    @GetMapping("/user/getByRole")
+    public List<User> getAllByRoleName(@RequestParam String roleName){
+        return  null;
+    }
 }
