@@ -1,10 +1,7 @@
 package com.example.elwart.user.service;
 
 import com.example.elwart.user.dto.DelegationDto;
-import com.example.elwart.user.exception.BadAutoCapacityException;
-import com.example.elwart.user.exception.NotKmException;
-import com.example.elwart.user.exception.NotTicketPriceException;
-import com.example.elwart.user.exception.UserNotFoundException;
+import com.example.elwart.user.exception.*;
 import com.example.elwart.user.model.Delegation;
 import com.example.elwart.user.model.User;
 import com.example.elwart.user.repository.DelegationRepository;
@@ -39,6 +36,23 @@ public class DelegationServiceImpl implements DelegationService {
                 withTransportType(delegationDto.getTransportType()).withTravelDietAmount(delegationDto.getTravelDietAmount()).
                 withUser(user).build();
         delegationRepository.save(delegation);
+    }
+
+    @Override
+    public void changeDelegation(DelegationDto delegationDto, Long delgationId) throws BadAutoCapacityException, NotKmException, NotTicketPriceException {
+        Delegation delegationFromDto = Delegation.DelegationBuilder.aDelegation().withAccommodationPrice(delegationDto.getAccommodationPrice()).
+                withAutoCapacity(getAutoCapacity(delegationDto.getAutoCapacity())).withBreakfastNumber(delegationDto.getBreakfastNumber()).
+                withDateTimeStart(delegationDto.getDateTimeStart()).withDateTimeStop(delegationDto.getDateTimeStop()).
+                withDescription(delegationDto.getDescription()).withDinnerNumber(delegationDto.getDinnerNumber()).
+                withKm(getKm(delegationDto.getKm(),delegationDto.getTransportType())).withOtherOutlayDesc(delegationDto.getOtherOutlayDesc()).
+                withOtherOutlayPrice(delegationDto.getOtherOutlayPrice()).withOtherTicketsPrice(delegationDto.getOtherTicketsPrice()).
+                withSupperNumber(delegationDto.getSupperNumber()).withTicketPrice(getTicketPrice(delegationDto.getTicketPrice(),delegationDto.getTransportType())).
+                withTransportType(delegationDto.getTransportType()).withTravelDietAmount(delegationDto.getTravelDietAmount()).build();
+        Delegation delegation = delegationRepository.findById(delgationId).orElseThrow(()->new DelegationNotFoundException(delgationId));
+        delegationFromDto.setId(delegation.getId());
+        delegationFromDto.setUser(delegation.getUser());
+        delegationRepository.save(delegationFromDto);
+
     }
 
     private Double getTicketPrice(Double ticketPrice, Transport transport) throws NotTicketPriceException {

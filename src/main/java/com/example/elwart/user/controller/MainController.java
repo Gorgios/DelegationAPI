@@ -55,5 +55,9 @@ public class MainController {
     public boolean removeDelegation(@RequestParam Long delegationId, @RequestParam Long userId){
         return  userService.removeDelegation(delegationId,userId);
     }
+    @PutMapping("/delegation/{id}")
+    public void changeDelegation(@RequestBody DelegationDto delegationDto, @PathVariable Long id) throws NotKmException, BadAutoCapacityException, NotTicketPriceException {
+        delegationService.changeDelegation(delegationDto,id);
+    }
 
 }

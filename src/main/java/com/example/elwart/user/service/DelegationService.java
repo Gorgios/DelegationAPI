@@ -9,4 +9,5 @@ public interface DelegationService {
 
     void addDelegation(DelegationDto delegationDto, Long userId) throws BadAutoCapacityException, NotKmException, NotTicketPriceException;
 
+    void changeDelegation(DelegationDto delegationDto, Long delgationId)  throws BadAutoCapacityException, NotKmException, NotTicketPriceException;
 }
