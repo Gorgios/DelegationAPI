@@ -11,6 +11,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -60,6 +61,17 @@ public class DelegationServiceImpl implements DelegationService {
     @Override
     public List<Delegation> getAllDelegations() {
         return (List<Delegation>) delegationRepository.findAll();
+    }
+
+    @Override
+    public List<Delegation> getAllByDateStartDesc() {
+        return delegationRepository.findAllByOrderByDateTimeStartDesc();
+    }
+
+    @Override
+    public List<Delegation> getAllByUserAndDateStartDesc(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException(userId));
+        return delegationRepository.findDelegationsByUserOrderByDateTimeStartDesc(user);
     }
 
     private Double getTicketPrice(Double ticketPrice, Transport transport) throws NotTicketPriceException {
