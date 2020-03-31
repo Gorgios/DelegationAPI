@@ -15,4 +15,6 @@ public interface UserService {
     boolean deleteUserById(Long userId);
 
     List<User> getAllByRole(String roleName);
+
+    User getUserById(Long id);
 }

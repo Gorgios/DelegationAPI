@@ -26,6 +26,24 @@ public class DelegationDto {
     private String otherOutlayDesc;
     private Double otherOutlayPrice;
 
+    public DelegationDto(String description, LocalDateTime dateTimeStart, LocalDateTime dateTimeStop, Double travelDietAmount, Integer breakfastNumber, Integer dinnerNumber, Integer supperNumber, Transport transportType, Double ticketPrice, Integer autoCapacity, Double km, Double accommodationPrice, Double otherTicketsPrice, String otherOutlayDesc, Double otherOutlayPrice) {
+        this.description = description;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeStop = dateTimeStop;
+        this.travelDietAmount = travelDietAmount;
+        this.breakfastNumber = breakfastNumber;
+        this.dinnerNumber = dinnerNumber;
+        this.supperNumber = supperNumber;
+        this.transportType = transportType;
+        this.ticketPrice = ticketPrice;
+        this.autoCapacity = autoCapacity;
+        this.km = km;
+        this.accommodationPrice = accommodationPrice;
+        this.otherTicketsPrice = otherTicketsPrice;
+        this.otherOutlayDesc = otherOutlayDesc;
+        this.otherOutlayPrice = otherOutlayPrice;
+    }
+
     public String getDescription() {
         return description;
     }

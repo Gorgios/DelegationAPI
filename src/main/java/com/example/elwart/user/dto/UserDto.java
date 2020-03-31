@@ -13,6 +13,17 @@ public class UserDto {
     private String password;
     private List<String> roles;
 
+    public UserDto(String companyName, String companyAddress, String companyNip, String name, String fullName, String email, String password, List<String> roles) {
+        this.companyName = companyName;
+        this.companyAddress = companyAddress;
+        this.companyNip = companyNip;
+        this.name = name;
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public String getCompanyName() {
         return companyName;
     }

@@ -21,5 +21,5 @@ public interface DelegationService {
 
     List<Delegation> getAllByUserAndDateStartDesc(Long userId);
 
-    boolean removeDelegation(Long userId, Long delegationId);
+    boolean removeDelegation(Long delegationId, Long userId);
 }

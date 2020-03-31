@@ -72,7 +72,7 @@ public class DelegationServiceImpl implements DelegationService {
     }
 
     @Override
-    public boolean removeDelegation(Long userId, Long delegationId) {
+    public boolean removeDelegation(Long delegationId, Long userId) {
         Delegation delegation = delegationRepository.findById(delegationId).orElse(null);
         if (delegation==null)
             return false;
